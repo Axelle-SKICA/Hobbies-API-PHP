@@ -1,6 +1,8 @@
 <?php
     //connect do DB
     include("db_connect.php");
+    //import controller :
+    require_once("./controller.php");
    
     //routes :
     // /hobbies => /hobbies.php?req=hobbies
@@ -21,7 +23,11 @@
             // then switch on the first bit of the url ($url[0])
             switch($url[0]){
                 case "hobbies":
-                    echo "Hobbies";
+                    if(empty($url[1])){ //if there is nothing after "/hobbies"
+                        getAllHobbies();
+                    } else {
+                        getOneHobby($url[1]);
+                    }
                     break;
                 case "categories":
                     echo "Categories";
