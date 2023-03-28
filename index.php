@@ -1,6 +1,4 @@
 <?php
-    //connect do DB
-    include("db_connect.php");
     //import controller :
     require_once("./controller.php");
    
@@ -26,6 +24,7 @@
                     if(empty($url[1])){ //if there is nothing after "/hobbies"
                         getAllHobbies();
                     } else {
+                        //here $url[1] is the hobby id we get from the exploded url:
                         getOneHobby($url[1]);
                     }
                     break;
