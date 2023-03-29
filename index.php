@@ -57,7 +57,7 @@
             // then switch on the first bit of the route ($url[1])
             switch($url[1]){
                 case "hobbies":
-                    echo "Add one hobby";
+                    addHobby('Dance in the car like nobody is watching', '1995', 4, [10]);
                     break;
                 case "categories":
                     echo "Add one category";

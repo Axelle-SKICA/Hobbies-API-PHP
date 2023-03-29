@@ -99,7 +99,54 @@
     // FUNCTION : get all the hobbies by level
     function getHobbiesByLevel($levId){
         
-}
+    }
+
+
+    // FUNCTION : add one hobby
+    function addHobby($name, $start_year, $level_id, $categoriesArray){
+        try{
+
+            global $conn; 
+    
+            // 1) first we add hobby to hobby table:
+            $hobbyQuery="INSERT INTO hobby (name, start_year, level_id)
+                VALUES (?,?,?);";
+    
+            //prepare the query :        
+            $stmt = mysqli_prepare($conn, $hobbyQuery);
+    
+            //bind parameters (for the "?" IN QUERY):
+            mysqli_stmt_bind_param($stmt, 'ssi', $name, $start_year, $level_id); // 'sii' is for string/integer/integer
+    
+            // 2) then we insert lines in the hobby_has_category table:
+            // TODO
+    
+            //execute query:
+            $isOK= mysqli_stmt_execute($stmt);
+            if ($isOK){
+                //get id of the added hobby:
+                $addedId = mysqli_insert_id($conn);
+                //get the added hobby from DB:
+                $result = mysqli_query($conn,"SELECT * FROM hobby WHERE hobby.id={$addedId};");
+                $addedHobby=array();
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $addedHobby[] = $row;
+                }
+                //send the data as JSON:
+                http_response_code(201);
+                sendJSON($addedHobby[0]); 
+            } else {
+                throw new ExceptionWithCode('Internal server error',500);
+            }
+
+        } catch (Exception $e) {
+            $error = [
+                "message"=> $e->getMessage(),
+                "code"=> $e->getCode()
+            ];
+            print_r($error);
+        }
+    }
 
 
     //FUNCTION TO SEND JSON:
