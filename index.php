@@ -53,11 +53,34 @@
             //break apart the request URL. Each element after a '/' is stored in the $url array:
             $url=explode("/", filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)); 
             // print_r($url);
+            // echo "\n";
 
             // then switch on the first bit of the route ($url[1])
             switch($url[1]){
                 case "hobbies":
-                    addHobby('Dance in the car like nobody is watching', '1995', 4, [10]);
+                    // Get the JSON contents of the body
+                    $body = file_get_contents('php://input');
+
+                    // decode the json data
+                    $data = json_decode($body);
+
+                    // print_r($data);
+
+                    if(!empty($data->name)
+                    && !empty($data->start_year)
+                    && !empty($data->level_id)
+                    && !empty(($data->categories)[0])){
+                        //we get the data from the body of the request:
+                        $name=$data->name;
+                        $start_year=$data->start_year;
+                        $level_id=$data->level_id;
+                        $categories=array();
+                        for($i=0; $i<count($data->categories); $i++){
+                            $categories[]=($data->categories)[$i];
+                        }
+                        //we call the addHobby function passing this data:
+                        addHobby($name, $start_year, $level_id, $categories);
+                    }
                     break;
                 case "categories":
                     echo "Add one category";
@@ -68,6 +91,16 @@
                 default:
                     throw new ExceptionWithCode("Not found", 404);
             }          
+        }
+
+        // PATCH METHOD:
+        if($request_method==='PATCH') {
+            echo "PATCH !";
+        }
+
+        // DELETE METHOD:
+        if($request_method==='DELETE') {
+            echo "DELETE !";
         }
 
     } catch (Exception $e){
