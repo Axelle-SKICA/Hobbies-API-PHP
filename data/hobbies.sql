@@ -22,7 +22,7 @@ level_id INT NOT NULL,
 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 updated_at TIMESTAMP,
 PRIMARY KEY (ID),
-FOREIGN KEY (level_id) REFERENCES level(id));
+FOREIGN KEY (level_id) REFERENCES level(id) ON DELETE CASCADE);
 
 CREATE TABLE hobby_has_category
 (id INT NOT NULL AUTO_INCREMENT,
@@ -31,8 +31,8 @@ category_id INT NOT NULL,
 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 updated_at TIMESTAMP,
 PRIMARY KEY (ID),
-FOREIGN KEY (hobby_id) REFERENCES hobby(id),
-FOREIGN KEY (category_id) REFERENCES category(id),
+FOREIGN KEY (hobby_id) REFERENCES hobby(id) ON DELETE CASCADE,
+FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE,
 CONSTRAINT UC_hobby_category UNIQUE(hobby_id,category_id)
 );
 

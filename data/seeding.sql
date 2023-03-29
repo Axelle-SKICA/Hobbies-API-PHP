@@ -1,10 +1,10 @@
 BEGIN;
 
 INSERT INTO level (name) VALUES 
-    ('Really bad'),
+    ('LOTS of room for improvement'),
     ('OK'),
-    ('Good'),
-    ('Really good')
+    ('Good !'),
+    ('Really good :)')
 ;
 
 INSERT INTO category (name) VALUES 
