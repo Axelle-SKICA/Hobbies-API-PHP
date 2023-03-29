@@ -20,7 +20,7 @@ Here are the routes I will progressively add :
 |ROUTE|METHOD|DESCRIPTION|achieved ?|
 |---|---|---|:---:|
 |/hobbies|GET|get the list of my hobbies| YES |
-|/hobbies|POST|add a hobby| _In progress_ |
+|/hobbies|POST|add a hobby| YES |
 |/hobbies/:id|GET|get one of my hobbies with its id| YES |
 |/hobbies/:id|PATCH|update a hobby| |
 |/hobbies/:id|DELETE|delete a hobby| |

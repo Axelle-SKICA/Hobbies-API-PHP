@@ -116,16 +116,45 @@
             $stmt = mysqli_prepare($conn, $hobbyQuery);
     
             //bind parameters (for the "?" IN QUERY):
-            mysqli_stmt_bind_param($stmt, 'ssi', $name, $start_year, $level_id); // 'sii' is for string/integer/integer
-    
+            mysqli_stmt_bind_param($stmt, 'ssi', $name, $start_year, $level_id); // 'ssi' is for string/string/integer
+            
+            
+            //array to store the good execution of queries
+            $executed=array();
+            
+            if(mysqli_stmt_execute($stmt)){
+                $executed[]=true;
+            } else {
+                $executed[]=false;
+            }
+
+            //get id of the added hobby:
+            $addedId = mysqli_insert_id($conn);
+
             // 2) then we insert lines in the hobby_has_category table:
-            // TODO
-    
-            //execute query:
-            $isOK= mysqli_stmt_execute($stmt);
-            if ($isOK){
-                //get id of the added hobby:
-                $addedId = mysqli_insert_id($conn);
+            for($i=0; $i<count($categoriesArray); $i++){
+                $hobbyHasCatQuery="INSERT INTO hobby_has_category(hobby_id, category_id) VALUES (?,?)";
+                //prepare the query :        
+                $stmt2 = mysqli_prepare($conn, $hobbyHasCatQuery);
+                //bind parameters (for the "?" IN QUERY):
+                mysqli_stmt_bind_param($stmt2, 'ii', $addedId, $categoriesArray[$i]); // 'ii' is for integer/integer
+                if(mysqli_stmt_execute($stmt2)){
+                    $executed[]=true;
+                } else {
+                    $executed[]=false;
+                }
+            }
+            
+            $allInsertsOk;
+            for($j=0; $j<count($executed); $j++){
+                if($executed[$j]){
+                    $allInsertsOk=true;
+                } else {
+                    return $allInsertsOk=false;
+                }
+            }
+
+            if ($allInsertsOk){
                 //get the added hobby from DB:
                 $result = mysqli_query($conn,"SELECT * FROM hobby WHERE hobby.id={$addedId};");
                 $addedHobby=array();
