@@ -24,13 +24,15 @@ Here are the routes I will progressively add :
 |/hobbies/:id|GET|get one of my hobbies with its id| YES |
 |/hobbies/:id|PATCH|update a hobby| |
 |/hobbies/:id|DELETE|delete a hobby| |
-|/categories|GET|get the list of my hobby categories| |
+|/categories|GET|get the list of my hobby categories| YES |
 |/categories|POST|add a category| |
+|/categories/:id|GET|get one category with its id| YES |
 |/categories/:id|PATCH|update a category| |
 |/categories/:id|DELETE|delete a category| |
 |/categories/:id/hobbies|GET|get the list of all the hobbies from one category| |
-|/levels|GET|get the list of the levels of mastering of my hobbies| |
+|/levels|GET|get the list of the levels of mastering of my hobbies| YES |
 |/levels|POST|add a level| |
+|/levels/:id|GET|get one level with its id| YES |
 |/levels/:id|PATCH|update a level| |
 |/levels/:id|DELETE|delete a level| |
 |/levels/:id/hobbies|GET|get the list of all the hobbies from one level of mastering| |

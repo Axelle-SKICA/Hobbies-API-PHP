@@ -41,7 +41,12 @@
                         }
                         break;
                     case "levels":
-                        echo "Levels GET";
+                        if(empty($url[1])){ //if there is nothing after "/levels"
+                            getAllLevels();
+                        } else {
+                            //here $url[1] is the category id we get from the exploded url:
+                            getOneLevel($url[1]);
+                        }
                         break;
                     default:
                         throw new ExceptionWithCode("Not found", 404);
