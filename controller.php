@@ -15,7 +15,8 @@
             level.name level
             FROM hobby
             JOIN level
-            ON hobby.level_id = level.id;";
+            ON hobby.level_id = level.id
+            ORDER BY hobby.id;";
 
         //we store each row of the result in an array ($hobbies):
         $hobbies = array();
@@ -25,8 +26,7 @@
         }
         
         //we send the data from the array as JSON:
-        header('Content-Type: application/json');
-        echo json_encode($hobbies, JSON_PRETTY_PRINT); //JSON_PRETTY_PRINT: to see more clearly on screen
+        sendJSON($hobbies); 
         
         //close connection
         mysqli_close($conn);
@@ -68,22 +68,31 @@
         }
         
         //we send the data from the array as JSON:
-        header('Content-Type: application/json');
-        echo json_encode($hobby[0], JSON_PRETTY_PRINT); 
+        sendJSON($hobby); 
 
         //close statement & connection:
         mysqli_stmt_close($stmt);
         mysqli_close($conn); 
     }
 
+
     // FUNCTION : get all the hobbies by category
     function getHobbiesByCategory($catId){
         
     }
 
+     
     // FUNCTION : get all the hobbies by level
     function getHobbiesByLevel($levId){
         
 }
+
+
+    //FUNCTION TO SEND JSON:
+    function sendJSON($data){
+        header("Access-Control-Allow-Origin: *"); //CORS
+        header("Content-Type: application/json");
+        echo json_encode($data, JSON_PRETTY_PRINT); //JSON_PRETTY_PRINT: to see more clearly on screen
+    }
 
 ?>
