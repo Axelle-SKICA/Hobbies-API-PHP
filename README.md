@@ -1,14 +1,14 @@
 # Hobbies-API-PHP
 
-This is my first API using PHP, Wamp, MySQL...
+This is my first API using PHP, Wamp, MySQL
 
 __Here are the routes I will progressively add :__
 
 |ROUTE|METHOD|DESCRIPTION|achieved ?|
 |---|---|---|:---:|
-|/hobbies|GET|get the list of my hobbies| |
+|/hobbies|GET|get the list of my hobbies| YES |
 |/hobbies|POST|add a hobby| |
-|/hobbies/:id|GET|get one of my hobbies with its id| |
+|/hobbies/:id|GET|get one of my hobbies with its id| YES |
 |/hobbies/:id|PATCH|update a hobby| |
 |/hobbies/:id|DELETE|delete a hobby| |
 |/categories|GET|get the list of my hobby categories| |
