@@ -8,17 +8,19 @@
 
         //the SQL query to get all hobbies with name of the level:
         $query="SELECT
-            hobby.id,
-            hobby.name,
-            hobby.start_year,
-            hobby.level_id,
-            level.name level,
-            hobby.created_at,
-            hobby.updated_at
-            FROM hobby
-            JOIN level
-            ON hobby.level_id = level.id
-            ORDER BY hobby.id;";
+                    hobby.id,
+                    hobby.name,
+                    hobby.start_year,
+                    hobby.level_id,
+                    level.name AS level,
+                    JSON_OBJECTAGG(category.id, category.name) AS categories,
+                    hobby.created_at,
+                    hobby.updated_at
+                FROM hobby
+                    JOIN level ON hobby.level_id = level.id
+                    JOIN hobby_has_category ON hobby.id = hobby_has_category.hobby_id
+                    JOIN category ON hobby_has_category.category_id = category.id
+                GROUP BY hobby.id;";
 
         //we store each row of the result in an array ($hobbies):
         $hobbies = array();
@@ -42,15 +44,20 @@
             global $conn; 
     
             $query="SELECT
-                hobby.id,
-                hobby.name,
-                hobby.start_year,
-                hobby.level_id,
-                level.name level
+                    hobby.id,
+                    hobby.name,
+                    hobby.start_year,
+                    hobby.level_id,
+                    level.name AS level,
+                    JSON_OBJECTAGG(category.id, category.name) AS categories,
+                    hobby.created_at,
+                    hobby.updated_at
                 FROM hobby
-                JOIN level
-                ON hobby.level_id = level.id
-                WHERE hobby.id=?;";
+                    JOIN level ON hobby.level_id = level.id
+                    JOIN hobby_has_category ON hobby.id = hobby_has_category.hobby_id
+                    JOIN category ON hobby_has_category.category_id = category.id
+                GROUP BY hobby.id
+                HAVING hobby.id=?;";
     
             //prepare the query :        
             $stmt = mysqli_prepare($conn, $query);
