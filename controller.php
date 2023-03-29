@@ -8,6 +8,7 @@
 
         //the SQL query to get all hobbies with name of the level:
         $query="SELECT
+            hobby.id,
             hobby.name,
             hobby.start_year,
             hobby.level_id,
