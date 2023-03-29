@@ -26,6 +26,7 @@
         }
         
         //we send the data from the array as JSON:
+        http_response_code(200);
         sendJSON($hobbies); 
         
         //close connection
@@ -58,9 +59,6 @@
             //execute query:
             mysqli_stmt_execute($stmt);
     
-            // //bind result:
-            // mysqli_stmt_bind_result($stmt, $id);
-    
             //get result:
             $result = mysqli_stmt_get_result($stmt);
             
@@ -74,6 +72,7 @@
                 throw new ExceptionWithCode("There is no hobby with id '{$id}', try another id.", 404);
             } else {
                 //we send the data from the array as JSON:
+                http_response_code(200);
                 sendJSON($hobby[0]); 
             }
 
