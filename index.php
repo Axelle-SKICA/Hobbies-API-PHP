@@ -33,7 +33,12 @@
                         }
                         break;
                     case "categories":
-                        echo "Categories GET";
+                        if(empty($url[1])){ //if there is nothing after "/categories"
+                            getAllCategories();
+                        } else {
+                            //here $url[1] is the category id we get from the exploded url:
+                            getOneCategory($url[1]);
+                        }
                         break;
                     case "levels":
                         echo "Levels GET";
@@ -48,8 +53,6 @@
 
         //POST METHOD :
         elseif($request_method==='POST'){
-            // echo "POST !"."\n";
-
             //break apart the request URL. Each element after a '/' is stored in the $url array:
             $url=explode("/", filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)); 
             // print_r($url);

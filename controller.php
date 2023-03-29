@@ -8,10 +8,7 @@
 
         //the SQL query to get all hobbies with name of the level:
         $query="SELECT
-            hobby.id,
-            hobby.name,
-            hobby.start_year,
-            hobby.level_id,
+            hobby.*
             level.name level
             FROM hobby
             JOIN level
@@ -176,6 +173,75 @@
             print_r($error);
         }
     }
+
+    //FUNCTION : get list of all the categories:
+    function getAllCategories(){
+        global $conn; //we use global variable $conn (connection to DB) from db_connect.php
+
+        //the SQL query to get all categories :
+        $query="SELECT * FROM category ORDER BY category.id;";
+
+        //we store each row of the result in an array ($categories):
+        $categories = array();
+        $result = mysqli_query($conn, $query);
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+            $categories[] = $row;
+        }
+        
+        //we send the data from the array as JSON:
+        http_response_code(200);
+        sendJSON($categories); 
+        
+        //close connection
+        mysqli_close($conn);
+    }
+
+
+        // FUNCTION : get one categoryy by id
+        function getOneCategory($id){
+            try {
+                global $conn; 
+        
+                $query="SELECT * FROM category WHERE category.id=?;";
+        
+                //prepare the query :        
+                $stmt = mysqli_prepare($conn, $query);
+        
+                //bind parameter (for the "?" IN QUERY):
+                mysqli_stmt_bind_param($stmt, 'i', $id); // 'i' is for integer
+        
+                //execute query:
+                mysqli_stmt_execute($stmt);
+        
+                //get result:
+                $result = mysqli_stmt_get_result($stmt);
+                
+                $category=array();
+                while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                    $category[] = $row;
+                }
+                
+                //if there is no category in DB for this $id, we throw an exception:
+                if(!$category){
+                    throw new ExceptionWithCode("There is no category with id '{$id}', try another id.", 404);
+                } else {
+                    //we send the data from the array as JSON:
+                    http_response_code(200);
+                    sendJSON($category[0]); 
+                }
+    
+                //close statement & connection:
+                mysqli_stmt_close($stmt);
+                mysqli_close($conn); 
+    
+            } catch (Exception $e){
+                $error = [
+                    "message"=> $e->getMessage(),
+                    "code"=> $e->getCode()
+                ];
+                print_r($error);
+            }
+        }
 
 
     //FUNCTION TO SEND JSON:
