@@ -71,7 +71,7 @@
             
             //if there is no hobby in DB for this $id, we throw an exception:
             if(!$hobby){
-                throw new Exception("There is no hobby with id = '{$id}', try another id.");
+                throw new ExceptionWithCode("There is no hobby with id '{$id}', try another id.", 404);
             } else {
                 //we send the data from the array as JSON:
                 sendJSON($hobby[0]); 

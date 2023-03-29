@@ -13,7 +13,9 @@
     // /levels/:id/hobbies
 
     try{
-        if(!empty($_GET['req'])){ //if a request is received
+        // GET METHODS:
+        
+        if(isset($_GET['req']) && !empty($_GET['req'])){ //if a request is received with method GET
 
             //break apart info from the request URL. Each element after a '/' is stored in the $url array:
             $url=explode("/", filter_var($_GET['req'], FILTER_SANITIZE_URL));
@@ -35,7 +37,7 @@
                     echo "Levels";
                     break;
                 default:
-                    throw new Exception ('URL unknown');
+                    throw new ExceptionWithCode("Not found", 404);
             }
         } else {
             throw new Exception('Problem of data recollection');
@@ -47,6 +49,14 @@
             "code"=> $e->getCode()
         ];
         print_r($error);
+    }
+
+    class ExceptionWithCode extends Exception {
+        public $code=0;
+        public function __construct($message, $code){
+            parent::__construct($message);
+            $this->code=$code;
+        }
     }
 
 ?>  
