@@ -35,44 +35,59 @@
 
     // FUNCTION : get one hobby by id
     function getOneHobby($id){
-        global $conn; 
+        try {
+            global $conn; 
+    
+            $query="SELECT
+                hobby.id,
+                hobby.name,
+                hobby.start_year,
+                hobby.level_id,
+                level.name level
+                FROM hobby
+                JOIN level
+                ON hobby.level_id = level.id
+                WHERE hobby.id=?;";
+    
+            //prepare the query :        
+            $stmt = mysqli_prepare($conn, $query);
+    
+            //bind parameter (for the "?" IN QUERY):
+            mysqli_stmt_bind_param($stmt, 'i', $id); // 'i' is for integer
+    
+            //execute query:
+            mysqli_stmt_execute($stmt);
+    
+            // //bind result:
+            // mysqli_stmt_bind_result($stmt, $id);
+    
+            //get result:
+            $result = mysqli_stmt_get_result($stmt);
+            
+            $hobby=array();
+            while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                $hobby[] = $row;
+            }
+            
+            //if there is no hobby in DB for this $id, we throw an exception:
+            if(!$hobby){
+                throw new Exception("There is no hobby with id = '{$id}', try another id.");
+            } else {
+                //we send the data from the array as JSON:
+                sendJSON($hobby[0]); 
+            }
 
-        $query="SELECT
-            hobby.id,
-            hobby.name,
-            hobby.start_year,
-            hobby.level_id,
-            level.name level
-            FROM hobby
-            JOIN level
-            ON hobby.level_id = level.id
-            WHERE hobby.id=?;";
+            //close statement & connection:
+            mysqli_stmt_close($stmt);
+            mysqli_close($conn); 
 
-        //prepare the query :        
-        $stmt = mysqli_prepare($conn, $query);
-
-        //bind parameter (for the "?" IN QUERY):
-        mysqli_stmt_bind_param($stmt, 'i', $id); // 'i' is for integer
-
-        //execute query:
-        mysqli_stmt_execute($stmt);
-
-        // //bind result:
-        // mysqli_stmt_bind_result($stmt, $id);
-
-        //get result:
-        $result = mysqli_stmt_get_result($stmt);
-
-        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-            $hobby[] = $row;
+        } catch (Exception $e){
+            $error = [
+                "message"=> $e->getMessage(),
+                "code"=> $e->getCode()
+            ];
+            print_r($error);
         }
-        
-        //we send the data from the array as JSON:
-        sendJSON($hobby); 
-
-        //close statement & connection:
-        mysqli_stmt_close($stmt);
-        mysqli_close($conn); 
     }
 
 
