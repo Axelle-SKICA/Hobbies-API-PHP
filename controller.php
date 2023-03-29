@@ -8,8 +8,12 @@
 
         //the SQL query to get all hobbies with name of the level:
         $query="SELECT
-            hobby.*
-            level.name level
+            hobby.name,
+            hobby.start_year,
+            hobby.level_id,
+            level.name level,
+            hobby.created_at,
+            hobby.updated_at
             FROM hobby
             JOIN level
             ON hobby.level_id = level.id
