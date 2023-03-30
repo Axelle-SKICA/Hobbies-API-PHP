@@ -165,12 +165,35 @@
 
             if ($allInsertsOk){
                 //get the added hobby from DB:
-                $result = mysqli_query($conn,"SELECT * FROM hobby WHERE hobby.id={$addedId};");
+                global $conn; 
+                $query="SELECT
+                        hobby.id,
+                        hobby.name,
+                        hobby.start_year,
+                        hobby.level_id,
+                        level.name AS level,
+                        JSON_OBJECTAGG(category.id, category.name) AS categories,
+                        hobby.created_at,
+                        hobby.updated_at
+                    FROM hobby
+                        JOIN level ON hobby.level_id = level.id
+                        JOIN hobby_has_category ON hobby.id = hobby_has_category.hobby_id
+                        JOIN category ON hobby_has_category.category_id = category.id
+                    GROUP BY hobby.id
+                    HAVING hobby.id=?;";
+                //prepare the query :        
+                $stmt = mysqli_prepare($conn, $query);
+                //bind parameter (for the "?" IN QUERY):
+                mysqli_stmt_bind_param($stmt, 'i', $addedId); // 'i' is for integer
+                //execute query:
+                mysqli_stmt_execute($stmt);
+                //get result:
+                $result = mysqli_stmt_get_result($stmt);
                 $addedHobby=array();
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                     $addedHobby[] = $row;
                 }
-                //send the data as JSON:
+                //send data as JSON:
                 http_response_code(201);
                 sendJSON($addedHobby[0]); 
             } else {
@@ -331,6 +354,7 @@
         header("Access-Control-Allow-Origin: *"); //CORS
         header("Content-Type: application/json");
         echo json_encode($data, JSON_PRETTY_PRINT); //JSON_PRETTY_PRINT: to see more clearly on screen
+        //or JSON_UNESCAPED_UNICODE to handle accents etc
     }
 
 ?>
