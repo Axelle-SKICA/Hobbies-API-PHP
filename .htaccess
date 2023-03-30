@@ -1,7 +1,4 @@
-RewriteEngine On # activer module Rewrite
-
-#RewriteRule ^hobbies/?$ hobbies.php [L]
-#RewriteRule ^[^/]+/(\d+)$ hobbies.php?id=$1
+RewriteEngine On # activate Rewrite module 
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
