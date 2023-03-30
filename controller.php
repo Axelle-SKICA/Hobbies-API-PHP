@@ -94,7 +94,7 @@
                 "message"=> $e->getMessage(),
                 "code"=> $e->getCode()
             ];
-            print_r($error);
+            echo "<h1>Error {$error['code']}</h1><h3>{$error['message']}</h3>";
         }
     }
 
@@ -205,7 +205,7 @@
                 "message"=> $e->getMessage(),
                 "code"=> $e->getCode()
             ];
-            print_r($error);
+            echo "<h1>Error {$error['code']}</h1><h3>{$error['message']}</h3>";
         }
     }
 
@@ -274,7 +274,7 @@
                     "message"=> $e->getMessage(),
                     "code"=> $e->getCode()
                 ];
-                print_r($error);
+                echo "<h1>Error {$error['code']}</h1><h3>{$error['message']}</h3>";
             }
     }
 
