@@ -1,6 +1,15 @@
-# Hobbies-API-PHP
+# My Hobbies (API REST with PHP)
 
-This is my first API with PHP !
+This is my first __API REST__ with __PHP__ !
+
+I experimented on :
+- routing
+- Exception handling and custom Exceptions
+- JSON aggregations in SQL
+- mysqli
+- prepared queries...  
+
+...all with just PHP. I'll work with __Symfony__ next !
 
 ## Technologies & tools
 
@@ -15,10 +24,10 @@ This is my first API with PHP !
 
 With this API you will have access to a list of some of __my hobbies__ (_Lucky you !_).  
 
-- I have assessed my own __level__ of "mastering" each hobby (_Shocking news ! so...I'm not excellent at everything I do and like ?! No._)
+- I have assessed my own __level__ of "mastering" each hobby (_Shocking news ! so...I'm not excellent at everything I do and like ?! No... but almost :wink: _)
 - each hobby belongs to one ore more __categories__
 
-Database structure and seeding file are available in "data".
+Database structure, and a seeding file are available in "data".
 
 ## Routes  
 
@@ -46,6 +55,7 @@ Here are the routes I will progressively add :
 
 ## What Next ?
 
-- Organize in MVC Architecture
 - Documentation of the API
-- Develop basic front application to use the API 
+- Organize in MVC Architecture ? (=> I think I'll do that with Symfony)
+- Develop basic front application to use the API ?
+
