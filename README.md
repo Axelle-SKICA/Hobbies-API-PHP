@@ -24,7 +24,7 @@ I experimented on :
 
 With this API you will have access to a list of some of __my hobbies__ (_Lucky you !_).  
 
-- I have assessed my own __level__ of "mastering" each hobby (_Shocking news ! so...I'm not excellent at everything I do and like ?! No... but almost :wink: _)
+- I have assessed my own __level__ of "mastering" each hobby (_Shocking news ! so...I'm not excellent at everything I do and like ?! No... but almost :wink:_)
 - each hobby belongs to one ore more __categories__
 
 Database structure, and a seeding file are available in "data".
@@ -56,6 +56,6 @@ Here are the routes I will progressively add :
 ## What Next ?
 
 - Documentation of the API
-- Organize in MVC Architecture ? (=> I think I'll do that with Symfony)
+- Organize in MVC Architecture ? (=> probably with __Symfony__)
 - Develop basic front application to use the API ?
 
