@@ -23,6 +23,8 @@ I experimented on :
 ## About it
 
 With this API you will have access to a list of some of __my hobbies__ (_Lucky you !_).  
+  
+I used __Wamp__ server.
 
 - I have assessed my own __level__ of "mastering" each hobby (_Shocking news ! so...I'm not excellent at everything I do and like ?! No... but almost :wink:_)
 - each hobby belongs to one ore more __categories__
